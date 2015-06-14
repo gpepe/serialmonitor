@@ -14,6 +14,7 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    Button1: TButton;
     CheckGroup1: TCheckGroup;
     ComboBox1: TComboBox;
     baud: TComboBox;
@@ -26,6 +27,7 @@ type
     IdleTimer1: TIdleTimer;
     Memo1: TMemo;
     Panel1: TPanel;
+    procedure Button1Click(Sender: TObject);
     procedure CheckGroup1ItemClick(Sender: TObject; Index: integer);
     procedure Edit1KeyPress(Sender: TObject; var Key: char);
     procedure FormActivate(Sender: TObject);
@@ -118,6 +120,12 @@ procedure TForm1.CheckGroup1ItemClick(Sender: TObject; Index: integer);
 begin
   freeandnil(ser);
   GroupBox1.Caption:=cNoneConn;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Memo1.Lines.Clear;
+  Edit1.SetFocus;
 end;
 
 

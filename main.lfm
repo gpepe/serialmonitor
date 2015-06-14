@@ -181,6 +181,16 @@ object Form1: TForm1
         TabOrder = 3
         Text = 'stop'
       end
+      object Button1: TButton
+        Left = 505
+        Height = 25
+        Top = 0
+        Width = 75
+        Align = alRight
+        Caption = 'clear'
+        OnClick = Button1Click
+        TabOrder = 4
+      end
     end
   end
   object IdleTimer1: TIdleTimer
