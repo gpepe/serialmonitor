@@ -118,8 +118,7 @@ end;
 
 procedure TForm1.CheckGroup1ItemClick(Sender: TObject; Index: integer);
 begin
-  freeandnil(ser);
-  GroupBox1.Caption:=cNoneConn;
+  paramsChange(Sender);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -219,12 +218,6 @@ begin
   FreeAndNil(ser);
   Edit1.SetFocus;
 end;
-
-
-
-
-
-
 
 end.
 

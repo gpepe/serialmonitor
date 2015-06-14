@@ -77,6 +77,11 @@ object Form1: TForm1
     Caption = 'Connected: none'
     ClientHeight = 318
     ClientWidth = 584
+    Font.Color = clGreen
+    Font.Height = -13
+    Font.Name = 'Sans'
+    Font.Style = [fsBold]
+    ParentFont = False
     TabOrder = 2
     object Memo1: TMemo
       Left = 0
@@ -84,9 +89,12 @@ object Form1: TForm1
       Top = 42
       Width = 584
       Align = alClient
+      Font.Height = -13
+      Font.Name = 'Sans'
       Lines.Strings = (
         'Memo1'
       )
+      ParentFont = False
       ScrollBars = ssVertical
       TabOrder = 0
     end
@@ -100,6 +108,9 @@ object Form1: TForm1
       Caption = 'Port settings'
       ClientHeight = 25
       ClientWidth = 580
+      Font.Height = -13
+      Font.Name = 'Sans'
+      ParentFont = False
       TabOrder = 1
       object baud: TComboBox
         Left = 0
