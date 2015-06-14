@@ -15,10 +15,12 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
+    reset: TButton;
     CheckGroup1: TCheckGroup;
     ComboBox1: TComboBox;
     baud: TComboBox;
     bit: TEdit;
+    Panel2: TPanel;
     stop: TEdit;
     par: TComboBox;
     Edit1: TEdit;
@@ -37,6 +39,7 @@ type
     procedure IdleTimer1Timer(Sender: TObject);
     procedure FormException(Sender : TObject; E : Exception);
     procedure paramsChange(Sender: TObject);
+    procedure resetClick(Sender: TObject);
   private
     ser:TBlockSerial;
     { private declarations }
@@ -217,6 +220,13 @@ begin
   GroupBox1.Caption:=cNoneConn;
   FreeAndNil(ser);
   Edit1.SetFocus;
+end;
+
+procedure TForm1.resetClick(Sender: TObject);
+begin
+  CheckGroup1.Items.Clear;
+  paramsChange(Sender);
+
 end;
 
 end.
