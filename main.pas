@@ -15,6 +15,7 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
+    autoscroll1: TCheckBox;
     reset: TButton;
     CheckGroup1: TCheckGroup;
     ComboBox1: TComboBox;
@@ -29,6 +30,7 @@ type
     Memo1: TMemo;
     Panel1: TPanel;
     procedure Button1Click(Sender: TObject);
+    procedure autoscroll1Change(Sender: TObject);
     procedure CheckGroup1ItemClick(Sender: TObject; Index: integer);
     procedure Edit1KeyPress(Sender: TObject; var Key: char);
     procedure FormActivate(Sender: TObject);
@@ -95,6 +97,11 @@ procedure TForm1.Button1Click(Sender: TObject);
 begin
   Memo1.Lines.Clear;
   Edit1.SetFocus;
+end;
+
+procedure TForm1.autoscroll1Change(Sender: TObject);
+begin
+  ST.AutoScroll := autoscroll1.Checked;
 end;
 
 procedure TForm1.Edit1KeyPress(Sender: TObject; var Key: char);

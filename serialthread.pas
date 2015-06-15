@@ -21,6 +21,7 @@ type
     RequestReset : Boolean;
     RequestSuspended : Boolean;
     Send:String;
+    FAutoscroll : boolean;
 
     baud,bit,parity,stop:string;
 
@@ -36,6 +37,7 @@ type
     procedure Reset(const xbaud,xbit,xparity,xstop:string);
     procedure SendString(const xsend:string);
     procedure pause;
+    property Autoscroll:boolean read FAutoscroll write FAutoscroll;
   end;
 
 implementation
@@ -45,8 +47,20 @@ const
 { TSerialThread }
 
 procedure TSerialThread.ToLog();
+var
+  p :TPoint;
 begin
-  if data<>'' then Log.Lines.Add(data);
+  if data<>'' then begin
+    log.Lines.BeginUpdate;
+    try
+      p := log.CaretPos;
+      Log.Lines.Add(data);
+      if not(Autoscroll)
+      then log.CaretPos := p;
+    finally
+      log.Lines.EndUpdate;
+    end;
+  end;
 end;
 
 procedure TSerialThread.OnException;
@@ -168,6 +182,7 @@ begin
   RequestSuspended := False;
   RequestReset:=false;
   Send := '';
+  autoscroll := true;
   inherited Create(true);
 end;
 
