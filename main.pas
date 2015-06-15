@@ -17,8 +17,8 @@ type
     Button1: TButton;
     autoscroll1: TCheckBox;
     ComboBox2: TComboBox;
+    RadioGroup1: TRadioGroup;
     reset: TButton;
-    CheckGroup1: TCheckGroup;
     ComboBox1: TComboBox;
     baud: TComboBox;
     bit: TEdit;
@@ -31,7 +31,6 @@ type
     Panel1: TPanel;
     procedure Button1Click(Sender: TObject);
     procedure autoscroll1Change(Sender: TObject);
-    procedure CheckGroup1ItemClick(Sender: TObject; Index: integer);
     procedure ComboBox2KeyPress(Sender: TObject; var Key: char);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -39,6 +38,7 @@ type
     procedure FormDeactivate(Sender: TObject);
     procedure FormException(Sender : TObject; E : Exception);
     procedure paramsChange(Sender: TObject);
+    procedure RadioGroup1SelectionChanged(Sender: TObject);
     procedure resetClick(Sender: TObject);
   private
     ST:TSerialThread;
@@ -68,7 +68,7 @@ begin
   Application.OnException:=@FormException;
   stop.text:='0';
   bit.Text:='8';
-  ST := TSerialThread.Create(Memo1, GroupBox1, CheckGroup1);
+  ST := TSerialThread.Create(Memo1, GroupBox1, RadioGroup1);
   ST.Reset(baud.Items[baud.ItemIndex], bit.Text, par.items[par.ItemIndex], stop.Text);
 end;
 
@@ -87,12 +87,6 @@ begin
   CloseAction:=caFree;
   ST.terminate;
 end;
-
-procedure TForm1.CheckGroup1ItemClick(Sender: TObject; Index: integer);
-begin
-  paramsChange(Sender);
-end;
-
 
 procedure TForm1.ComboBox2KeyPress(Sender: TObject; var Key: char);
 var
@@ -134,6 +128,7 @@ end;
 procedure TForm1.autoscroll1Change(Sender: TObject);
 begin
   ST.AutoScroll := autoscroll1.Checked;
+  ComboBox2.SetFocus;
 end;
 
 
@@ -150,9 +145,14 @@ begin
   ComboBox2.SetFocus;
 end;
 
+procedure TForm1.RadioGroup1SelectionChanged(Sender: TObject);
+begin
+  paramsChange(Sender);
+end;
+
 procedure TForm1.resetClick(Sender: TObject);
 begin
-  CheckGroup1.Items.Clear;
+  RadioGroup1.Items.Clear;
   paramsChange(Sender);
 end;
 

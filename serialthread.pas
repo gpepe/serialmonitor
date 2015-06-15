@@ -16,7 +16,7 @@ type
     ser:TBlockSerial;
     Log:TMemo;
     GroupBox1:TGroupBox;
-    CheckGroup1: TCheckGroup;
+    CheckGroup1: TRadioGroup;
     Data : string;
     RequestReset : Boolean;
     RequestSuspended : Boolean;
@@ -32,7 +32,7 @@ type
   protected
     procedure Execute; override;
   public
-    constructor Create(m:TMemo; gb:TGroupBox; cb: TCheckGroup); overload;
+    constructor Create(m:TMemo; gb:TGroupBox; cb: TRadioGroup); overload;
     destructor Destroy; override;
     procedure Reset(const xbaud,xbit,xparity,xstop:string);
     procedure SendString(const xsend:string);
@@ -91,7 +91,7 @@ begin
       if (s<>'') and (x =-1)
       then begin
         x := CheckGroup1.Items.add(t.Strings[i]);
-        CheckGroup1.Checked[x]:=true;
+        if CheckGroup1.Items.Count=1 then CheckGroup1.ItemIndex:=0;
       end;
       inc(i);
     end;
@@ -102,29 +102,22 @@ end;
 
 procedure TSerialThread.Connect;
 var
-  i : Integer;
   s : String;
 begin
-  i:=0;
-  while(i<CheckGroup1.Items.Count)
-  do begin
-    if CheckGroup1.Checked[i]
-    then begin
-      try
-        s := CheckGroup1.Items.Strings[i];
-        ser:=TBlockserial.Create;
-        ser.RaiseExcept:=true;
-        ser.LinuxLock:=false;
-        ser.Connect(s);
-        ser.Config(StrToInt(baud),StrToInt(bit),parity[1],StrToInt(stop),false,false);
-        GroupBox1.Caption:='Connected: '+s;
-        break;
-      except
-        GroupBox1.Caption:=cNoneConn;
-          freeandnil(ser);
-      end;
+  if CheckGroup1.ItemIndex>-1
+  then begin
+    try
+      s := CheckGroup1.Items.Strings[CheckGroup1.ItemIndex];
+      ser:=TBlockserial.Create;
+      ser.RaiseExcept:=true;
+      ser.LinuxLock:=false;
+      ser.Connect(s);
+      ser.Config(StrToInt(baud),StrToInt(bit),parity[1],StrToInt(stop),false,false);
+      GroupBox1.Caption:='Connected: '+s;
+    except
+      GroupBox1.Caption:=cNoneConn;
+        freeandnil(ser);
     end;
-    inc(i);
   end;
 end;
 
@@ -172,7 +165,7 @@ begin
 end;
 
 
-constructor TSerialThread.Create(m:TMemo; gb:TGroupBox; cb: TCheckGroup);
+constructor TSerialThread.Create(m:TMemo; gb:TGroupBox; cb: TRadioGroup);
 begin
   Priority:=tpIdle;
   FreeOnTerminate:=true;
