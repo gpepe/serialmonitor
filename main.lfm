@@ -229,11 +229,4 @@ object Form1: TForm1
       TabOrder = 1
     end
   end
-  object IdleTimer1: TIdleTimer
-    AutoEnabled = True
-    Interval = 500
-    OnTimer = IdleTimer1Timer
-    left = 124
-    top = 84
-  end
 end

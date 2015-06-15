@@ -1,6 +1,7 @@
 program SerialMonitor;
 
 {$mode objfpc}{$H+}
+{$DEFINE UseCThreads}
 
 uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
@@ -8,7 +9,7 @@ uses
   cmem,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, main
+  Forms, main, SerialThread
   { you can add units after this };
 
 {$R *.res}
