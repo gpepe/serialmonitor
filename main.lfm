@@ -1,9 +1,9 @@
 object Form1: TForm1
-  Left = 305
+  Left = 802
   Height = 362
-  Top = 194
+  Top = 247
   Width = 740
-  ActiveControl = Edit1
+  ActiveControl = ComboBox2
   Caption = 'Serial monitor'
   ClientHeight = 362
   ClientWidth = 740
@@ -41,15 +41,16 @@ object Form1: TForm1
       TabOrder = 0
       Text = '\n'
     end
-    object Edit1: TEdit
+    object ComboBox2: TComboBox
       Left = 1
       Height = 25
       Top = 1
       Width = 671
       Align = alClient
-      OnKeyPress = Edit1KeyPress
+      ItemHeight = 0
+      OnKeyPress = ComboBox2KeyPress
       TabOrder = 1
-      Text = 'Edit1'
+      Text = 'ComboBox2'
     end
   end
   object GroupBox1: TGroupBox

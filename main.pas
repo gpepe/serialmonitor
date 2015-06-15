@@ -16,6 +16,7 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     autoscroll1: TCheckBox;
+    ComboBox2: TComboBox;
     reset: TButton;
     CheckGroup1: TCheckGroup;
     ComboBox1: TComboBox;
@@ -24,7 +25,6 @@ type
     Panel2: TPanel;
     stop: TEdit;
     par: TComboBox;
-    Edit1: TEdit;
     GroupBox1: TGroupBox;
     GroupBox2: TGroupBox;
     Memo1: TMemo;
@@ -32,7 +32,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure autoscroll1Change(Sender: TObject);
     procedure CheckGroup1ItemClick(Sender: TObject; Index: integer);
-    procedure Edit1KeyPress(Sender: TObject; var Key: char);
+    procedure ComboBox2KeyPress(Sender: TObject; var Key: char);
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -61,7 +61,7 @@ const cNoneConn = 'Connected: none';
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Memo1.Lines.Clear;
-  Edit1.Text:='';
+  ComboBox2.Text:='';
   GroupBox1.Caption:=cNoneConn;
   Application.OnActivate:=@FormActivate;
   Application.OnDeactivate:=@FormDeactivate;
@@ -93,31 +93,28 @@ begin
   paramsChange(Sender);
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  Memo1.Lines.Clear;
-  Edit1.SetFocus;
-end;
 
-procedure TForm1.autoscroll1Change(Sender: TObject);
-begin
-  ST.AutoScroll := autoscroll1.Checked;
-end;
-
-procedure TForm1.Edit1KeyPress(Sender: TObject; var Key: char);
+procedure TForm1.ComboBox2KeyPress(Sender: TObject; var Key: char);
 var
   s:string;
 begin
   if (key=#13)
   then begin
     try
-      s := Edit1.Text;
+      s := ComboBox2.Text;
+      if (s<>'')
+      then begin
+        if (ComboBox2.Items.IndexOf(s)=-1)
+        then begin
+          ComboBox2.Items.add(s);
+        end;
+      end;
       if ComboBox1.Items[ComboBox1.ItemIndex] = '\n'
       then s := s+AnsiChar(LF)
       else if ComboBox1.Items[ComboBox1.ItemIndex] = '\r\n'
       then s := s+ AnsiString(CR+LF);
       ST.SendString(s);
-      Edit1.Text:= '';
+      ComboBox2.Text:= '';
     except
       on E : Exception do begin
         GroupBox1.Caption:=cNoneConn;
@@ -127,6 +124,18 @@ begin
     end;
   end;
 end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Memo1.Lines.Clear;
+  ComboBox2.SetFocus;
+end;
+
+procedure TForm1.autoscroll1Change(Sender: TObject);
+begin
+  ST.AutoScroll := autoscroll1.Checked;
+end;
+
 
 
 procedure TForm1.FormException(Sender: TObject; E: Exception);
@@ -138,7 +147,7 @@ procedure TForm1.paramsChange(Sender: TObject);
 begin
   GroupBox1.Caption:=cNoneConn;
   ST.Reset(baud.Items[baud.ItemIndex], bit.Text, par.items[par.ItemIndex], stop.Text);
-  Edit1.SetFocus;
+  ComboBox2.SetFocus;
 end;
 
 procedure TForm1.resetClick(Sender: TObject);
