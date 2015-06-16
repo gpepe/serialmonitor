@@ -8,4 +8,5 @@ Features:
 - Send history
 
 Use Lazarus to buid:
-  lazbuild SerialMonitor.lpr
+
+- lazbuild SerialMonitor.lpr
