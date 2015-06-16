@@ -5,7 +5,7 @@ unit SerialThread;
 interface
 
 uses
-  Classes, SysUtils, synaser, StdCtrls, ExtCtrls;
+  Classes, SysUtils, synaser, StdCtrls, ExtCtrls, LCLIntf;
 
 type
 
@@ -122,7 +122,10 @@ begin
 end;
 
 procedure TSerialThread.Execute;
+var
+  time : DWord;
 begin
+  time:=GetTickCount;
   while (not Terminated)
   do try
     if RequestSuspended
@@ -149,6 +152,14 @@ begin
       then begin
         data := Trim(ser.RecvPacket(1000));
         Synchronize(@ToLog);
+      end
+      else
+      begin
+        if (GetTickCount-time>5000)
+        then begin
+          Synchronize(@FindSerial);
+          time := GetTickCount;
+        end;
       end;
     end
     else begin
