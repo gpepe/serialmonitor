@@ -7,4 +7,5 @@ Features:
 - Auto open/close port when window activate/deactivate
 - Send history
 
-Use Lazarus to compile.
+Use Lazarus to buid:
+  lazbuild SerialMonitor.lpr
