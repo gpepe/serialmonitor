@@ -98,10 +98,9 @@ begin
       s := ComboBox2.Text;
       if (s<>'')
       then begin
-        if (ComboBox2.Items.IndexOf(s)=-1)
-        then begin
-          ComboBox2.Items.add(s);
-        end;
+        ComboBox2.Items.add(s);
+        if (ComboBox2.Items.Count>20)
+        then ComboBox2.Items.Delete(0);
       end;
       if ComboBox1.Items[ComboBox1.ItemIndex] = '\n'
       then s := s+AnsiChar(LF)
@@ -142,7 +141,7 @@ procedure TForm1.paramsChange(Sender: TObject);
 begin
   GroupBox1.Caption:=cNoneConn;
   ST.Reset(baud.Items[baud.ItemIndex], bit.Text, par.items[par.ItemIndex], stop.Text);
-  ComboBox2.SetFocus;
+  form1.ActiveControl := ComboBox2;
 end;
 
 procedure TForm1.RadioGroup1SelectionChanged(Sender: TObject);
